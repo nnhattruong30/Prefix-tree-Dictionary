@@ -2,10 +2,12 @@ class Node:
     "Trie node class"
     def __init__(self):
         self.children = [None] * 26
-        self.isEndOfWord = False
+        self.value = -1
 
 class Trie:
     "Trie data structure class"
+    _countNode = 0
+
     def __init__(self):
         self.root = self.getNode()
     
@@ -27,7 +29,8 @@ class Trie:
                 pNode.children[index] = self.getNode()
             pNode = pNode.children[index]
         
-        pNode.isEndOfWord = True
+        pNode.value = Trie._countNode
+        Trie._countNode += 1
 
     def searchNode(self, word):
         "Search key in the trie"
@@ -39,8 +42,13 @@ class Trie:
             if not pNode.children[index]:
                 return False
             pNode = pNode.children[index]
+        
+        return pNode != None and pNode.value != -1
 
-        return pNode != None and pNode.isEndOfWord == True
+    def deleteNode(self, word):
+        "Delete key in the trie"
+        
 
 if __name__ == "__main__":
-    pass
+    t = Trie()
+    
