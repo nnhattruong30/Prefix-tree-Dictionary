@@ -1,7 +1,9 @@
+
+ALPHABET_SIZE = 26
 class Node:
     "Trie node class"
     def __init__(self):
-        self.children = [None] * 26
+        self.children = [None] * ALPHABET_SIZE
         self.isEndOfWord = False
         self.meanWord = -1
 
@@ -20,10 +22,15 @@ class Trie:
         "Converts key current character into index"
         return (ord(ch)- ord('a'))
     
+    def _indexToChar(self, index):
+        "Converts index into character"
+        return(chr(index + ord('a')))
+
     def insertNode(self, word):
         "Insert key into trie"
         pNode = self.root
         length = len(word)
+        
         for level in range(length):
             index = self._charToIndex(word[level])
             if not pNode.children[index]:
@@ -45,12 +52,55 @@ class Trie:
                 return False
             pNode = pNode.children[index]
 
-        return pNode != None and pNode.isEndOfWord == True
+        return pNode != None and pNode.isEndOfWord
+    
+    def _printAllWord(self, node, word = ""):
+        "Print all words in the Trie"
+        if node.isEndOfWord:
+            print(word)
+        for i in range(ALPHABET_SIZE):
+            if node.children[i]:
+                word += self._indexToChar(i)
+                self._printAllWord(node.children[i], word)
+    
+    def display(self):
+        "Display the content of the Trie"
+        self._printAllWord(self.root)
 
-    def deleteNode(self, word):
-        "Delete key in the trie"
+    def isEmptyNode(self, root):
+        "Returns true if root has no children, else false"
+        for i in range(ALPHABET_SIZE):
+            if not root.children[i]:
+                return False
+        return True
+
+    def removeNode(self, root, word, depth = 0):
+        "Remove key in the trie"
+        if not root:
+            return None
+        if depth == len(word):
+            if root.isEndOfWord:
+                root.meanWord = -1
+                root.isEndOfWord = False
+            if self.isEmptyNode(root):
+                root = None
+            return root
+        
+        index = self._charToIndex(word[depth])
+        root.children[index] = self.removeNode(root.children[index], word, depth + 1)
+        if (self.isEmptyNode(root) and root.isEndOfWord == False):
+            root = None
+        return root
         
 
 if __name__ == "__main__":
     t = Trie()
+    t.insertNode("adidas")
+    t.insertNode("abcd")
+    t.insertNode("abc")
+    t.display()
+    t.removeNode(t.root, "abc")
+    print("Sau khi xoa:")
+    t.display()
+
     
