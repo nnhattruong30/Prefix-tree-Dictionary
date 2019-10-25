@@ -1,4 +1,4 @@
-
+import pickle
 class Node:
     def __init__(self):
         self.children = dict()
@@ -39,22 +39,22 @@ class Trie:
             return pNode
         return False
     
-    def _printAllWord(self, node, word = ""):
+    def _print(self, node, word = ""):
         "Print all words in the Trie"
         if node.isEndOfWord:
             print(word)
         for ch in node.children:
-            self._printAllWord(node.children[ch], word + ch)
+            self._print(node.children[ch], word + ch)
     
-    def display(self):
+    def printAllWord(self):
         "Display the content of the Trie"
-        self._printAllWord(self.root)
+        self._print(self.root)
 
     def isEmptyNode(self, root):
         "Returns true if root has no children, else false"
         return len(root.children) == 0 
 
-    def removeNode(self, root, word, depth = 0):
+    def _deleteNode(self, root, word, depth = 0):
         "Remove key in the trie"
         if (depth == len(word)): 
             if root.isEndOfWord:
@@ -64,7 +64,7 @@ class Trie:
             else: return False
         ch = word[depth]
         if ch in root.children:
-            child_ch = self.removeNode(root.children[ch], word, depth + 1)
+            child_ch = self._deleteNode(root.children[ch], word, depth + 1)
         else: return False
         if child_ch:
             root.children.pop(child_ch)
@@ -74,18 +74,31 @@ class Trie:
               
     def deleteWord(self, word):
         "Delete word in the Trie"
-        self.removeNode(self.root, word)
-        
+        self._deleteNode(self.root, word)
+    
+    def _suggestionRec(self, root, word, word_list):
+        if root.isEndOfWord:
+            word_list.append(word)
+        for ch, node in root.children.items():
+            self.suggestionRec(node, word + ch, word_list)
 
+    def getAutoSuggestion(self, query):
+        pNode = self.root
+        for ch in query:
+            if ch not in pNode.children:
+                return False
+            pNode = pNode.children[ch]
+        word_list = []
+        self._suggestionRec(pNode, query, word_list)
+        return word_list
+        
 if __name__ == "__main__":
-    pass
-    # t = Trie()
-    # t.insertNode('abc')
-    # t.insertNode('abcd')
-    # t.insertNode('abcdg')
-    # t.insertNode('aefg')
-    # t.insertNode('akjc')
-    # t.display()
-    # t.deleteWord("abcdg")
-    # print()
-    # t.display()
+    t = Trie()
+    t.insertNode("hello")
+    t.insertNode("hell")
+    t.insertNode("help")
+    t.insertNode("helps")
+    t.insertNode("helping")
+    t.insertNode("dog")
+    t.getAutoSuggestion('hello')
+    

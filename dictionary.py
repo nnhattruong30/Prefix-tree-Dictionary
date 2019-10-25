@@ -16,7 +16,7 @@ class Dictionary:
         with open("data/hash_mean.pickle", "rb") as f:
             self.hash_mean = pickle.load(f)
 
-    def dumpStructure(self):
+    def saveStructure(self):
         with open("data/trie.pickle", "wb") as f:
             pickle.dump(self.trie, f)
         with open("data/hash_mean.pickle", "wb") as f:
@@ -66,6 +66,4 @@ class Dictionary:
 if __name__ == "__main__":
     my_dict = Dictionary()
     my_dict.loadStructure()
-    x = my_dict.searchWord("have")
-    x = x.replace(r'\n', '\n')
-    print(x)
+    print(my_dict.searchWord('hello'))
