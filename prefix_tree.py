@@ -1,7 +1,7 @@
 
 class Node:
     def __init__(self):
-        self.children = {}
+        self.children = dict()
         self.isEndOfWord = False
 
 class Trie:
@@ -78,16 +78,14 @@ class Trie:
         
 
 if __name__ == "__main__":
-    t = Trie()
-    t.insertNode('abc')
-    t.insertNode('abcd')
-    t.insertNode('abcdg')
-    t.insertNode('aefg')
-    t.insertNode('akjc')
-    t.display()
-    t.deleteWord("abcdg")
-    print()
-    t.display()
-
-
-    
+    pass
+    # t = Trie()
+    # t.insertNode('abc')
+    # t.insertNode('abcd')
+    # t.insertNode('abcdg')
+    # t.insertNode('aefg')
+    # t.insertNode('akjc')
+    # t.display()
+    # t.deleteWord("abcdg")
+    # print()
+    # t.display()
