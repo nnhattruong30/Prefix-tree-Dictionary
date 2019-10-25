@@ -5,11 +5,14 @@ class Node:
     def __init__(self):
         self.children = [None] * ALPHABET_SIZE
         self.isEndOfWord = False
-        self.meanWord = -1
+        self.meanValue = -1
+    
+    def getMeanValue(self):
+        return self.meanValue
 
 class Trie:
     "Trie data structure class"
-    _countNode = 0
+    _countWord = 0
 
     def __init__(self):
         self.root = self.getNode()
@@ -38,8 +41,9 @@ class Trie:
             pNode = pNode.children[index]
         
         pNode.isEndOfWord = True
-        pNode.meanWord = Trie._countNode
-        Trie._countNode += 1
+        pNode.meanValue = Trie._countWord
+        Trie._countWord += 1
+        return pNode
 
     def searchNode(self, word):
         "Search key in the trie"
@@ -49,10 +53,12 @@ class Trie:
         for level in range(length):
             index = self._charToIndex(word[level])
             if not pNode.children[index]:
-                return False
+                return None
             pNode = pNode.children[index]
 
-        return pNode != None and pNode.isEndOfWord
+        if (pNode != None and pNode.isEndOfWord):
+            return pNode
+        return None
     
     def _printAllWord(self, node, word = ""):
         "Print all words in the Trie"
@@ -80,7 +86,7 @@ class Trie:
             return None
         if depth == len(word):
             if root.isEndOfWord:
-                root.meanWord = -1
+                root.meanValue = -1
                 root.isEndOfWord = False
             if self.isEmptyNode(root):
                 root = None
@@ -91,16 +97,18 @@ class Trie:
         if (self.isEmptyNode(root) and root.isEndOfWord == False):
             root = None
         return root
+    
+    def deleteWord(self, word):
+        "Delete word in the Trie"
+        self.removeNode(self.root, word)
         
 
 if __name__ == "__main__":
     t = Trie()
-    t.insertNode("adidas")
+    y = t.insertNode("adidas")
     t.insertNode("abcd")
-    t.insertNode("abc")
+    x = t.insertNode("abc")
     t.display()
-    t.removeNode(t.root, "abc")
-    print("Sau khi xoa:")
-    t.display()
+    print(t.searchNode("abcdd"))
 
     
