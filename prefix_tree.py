@@ -1,19 +1,11 @@
 
-ALPHABET_SIZE = 26
 class Node:
-    "Trie node class"
     def __init__(self):
-        self.children = [None] * ALPHABET_SIZE
+        self.children = {}
         self.isEndOfWord = False
-        self.meanValue = -1
-    
-    def getMeanValue(self):
-        return self.meanValue
 
 class Trie:
     "Trie data structure class"
-    _countWord = 0
-
     def __init__(self):
         self.root = self.getNode()
     
@@ -21,53 +13,38 @@ class Trie:
         "Return new node (initialized to NULL)"
         return Node()
     
-    def _charToIndex(self, ch):
-        "Converts key current character into index"
-        return (ord(ch)- ord('a'))
-    
-    def _indexToChar(self, index):
-        "Converts index into character"
-        return(chr(index + ord('a')))
-
     def insertNode(self, word):
         "Insert key into trie"
         pNode = self.root
-        length = len(word)
-        
-        for level in range(length):
-            index = self._charToIndex(word[level])
-            if not pNode.children[index]:
-                pNode.children[index] = self.getNode()
-            pNode = pNode.children[index]
-        
+        for ch in word:
+            if ch in pNode.children:
+                pNode = pNode.children[ch]
+            else:
+                newNode = self.getNode()
+                pNode.children[ch] = newNode
+                pNode = newNode
         pNode.isEndOfWord = True
-        pNode.meanValue = Trie._countWord
-        Trie._countWord += 1
         return pNode
 
     def searchNode(self, word):
         "Search key in the trie"
         pNode = self.root
-        length = len(word)
-        
-        for level in range(length):
-            index = self._charToIndex(word[level])
-            if not pNode.children[index]:
-                return None
-            pNode = pNode.children[index]
 
-        if (pNode != None and pNode.isEndOfWord):
+        for ch in word:
+            if ch not in pNode.children:
+                return False
+            pNode = pNode.children[ch]
+
+        if pNode.isEndOfWord:
             return pNode
-        return None
+        return False
     
     def _printAllWord(self, node, word = ""):
         "Print all words in the Trie"
         if node.isEndOfWord:
             print(word)
-        for i in range(ALPHABET_SIZE):
-            if node.children[i]:
-                word += self._indexToChar(i)
-                self._printAllWord(node.children[i], word)
+        for ch in node.children:
+            self._printAllWord(node.children[ch], word + ch)
     
     def display(self):
         "Display the content of the Trie"
@@ -75,29 +52,26 @@ class Trie:
 
     def isEmptyNode(self, root):
         "Returns true if root has no children, else false"
-        for i in range(ALPHABET_SIZE):
-            if not root.children[i]:
-                return False
-        return True
+        return len(root.children) == 0 
 
     def removeNode(self, root, word, depth = 0):
         "Remove key in the trie"
-        if not root:
-            return None
-        if depth == len(word):
+        if (depth == len(word)): 
             if root.isEndOfWord:
-                root.meanValue = -1
                 root.isEndOfWord = False
             if self.isEmptyNode(root):
-                root = None
-            return root
-        
-        index = self._charToIndex(word[depth])
-        root.children[index] = self.removeNode(root.children[index], word, depth + 1)
+                return word[depth-1]
+            else: return False
+        ch = word[depth]
+        if ch in root.children:
+            child_ch = self.removeNode(root.children[ch], word, depth + 1)
+        else: return False
+        if child_ch:
+            root.children.pop(child_ch)
         if (self.isEmptyNode(root) and root.isEndOfWord == False):
-            root = None
-        return root
-    
+            return ch
+        return False
+              
     def deleteWord(self, word):
         "Delete word in the Trie"
         self.removeNode(self.root, word)
@@ -105,10 +79,15 @@ class Trie:
 
 if __name__ == "__main__":
     t = Trie()
-    y = t.insertNode("adidas")
-    t.insertNode("abcd")
-    x = t.insertNode("abc")
+    t.insertNode('abc')
+    t.insertNode('abcd')
+    t.insertNode('abcdg')
+    t.insertNode('aefg')
+    t.insertNode('akjc')
     t.display()
-    print(t.searchNode("abcdd"))
+    t.deleteWord("abcdg")
+    print()
+    t.display()
+
 
     
