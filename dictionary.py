@@ -57,7 +57,7 @@ class Dictionary:
         "Add all word in file to dictionary"
         try:
             mean_file = open(self.path_file_mean, "wb")
-            with open(path_file, "r") as f:
+            with open(path_file, "r", encoding='utf-8') as f:
                 for line in f:
                     word_mean = line.split(maxsplit=1)
                     self.trie.insertNode(word_mean[0])
