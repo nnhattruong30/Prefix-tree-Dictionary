@@ -8,7 +8,9 @@
 - dictionary.py: lớp từ điển
 - prefix_tree.py: cấu trúc cây tiền tố
 - ui.py: giao diện
-## 3. Cài đặt Module cần thiết
+## 3. Cài đặt môi trường
+- Hệ điều hành Ubuntu
+- Python 3
 - PyQt5: `pip install PyQt5`
 ## 4. Chạy chương trình
 - Lưu dataset (tạo các tập tin data): `python dictionary.py`
