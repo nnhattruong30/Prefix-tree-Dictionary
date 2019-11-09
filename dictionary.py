@@ -76,3 +76,4 @@ if __name__ == "__main__":
     my_dict = Dictionary()
     my_dict.addWordInFile(path_file_dataset)
     my_dict.saveStructure()
+    print("Add successfully.")

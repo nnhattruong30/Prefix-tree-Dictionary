@@ -11,4 +11,5 @@
 ## 3. Cài đặt Module cần thiết
 - PyQt5: `pip install PyQt5`
 ## 4. Chạy chương trình
+- Lưu dataset: `python dictionary.py`
 - Chạy chương trình bằng lệnh: `python main.py`
