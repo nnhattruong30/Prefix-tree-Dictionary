@@ -1,6 +1,6 @@
-# Prefix-tree-Dictionary
+# Cây tiền tố cho từ điển
 ## 1. Dataset
-- Tập tin dataset 63920 từ lưu trong thư mục res
+- res/common-english-viet-words.txt: Tập tin dataset 63920 từ trong từ điển Anh - Việt
 ## 2. Cấu trúc tập tin
 - mean_word.bin : tập tin nhị phân lưu nghĩa của từ
 - trie.pickle: cấu trúc cây tiền tố
