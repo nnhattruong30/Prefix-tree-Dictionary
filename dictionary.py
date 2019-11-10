@@ -16,9 +16,9 @@ class Dictionary:
 
     def loadStructure(self):
         with open(self.path_trie, "rb") as f:
-            self.trie = pickle.load(f)
+            self.trie = pickle.load(f, encoding='utf-8')
         with open(self.path_hash, "rb") as f:
-            self.hash_mean = pickle.load(f)
+            self.hash_mean = pickle.load(f, encoding='utf-8')
 
     def saveStructure(self):
         with open(self.path_trie, "wb") as f:
