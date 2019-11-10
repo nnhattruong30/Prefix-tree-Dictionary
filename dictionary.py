@@ -8,7 +8,7 @@ class Dictionary:
     def __init__(self):
         self.trie = prefix_tree.Trie()
         self.hash_mean = dict()
-        self.path_file_mean = os.path.join('data', 'mean_word.bin')
+        self.path_file_mean = os.path.join('data', 'mean_word.dat')
         self.path_trie = os.path.join('data', 'trie.pickle')
         self.path_hash = os.path.join('data', 'hash_mean.pickle')
         if os.path.isfile(self.path_trie) and os.path.isfile(self.path_hash):
