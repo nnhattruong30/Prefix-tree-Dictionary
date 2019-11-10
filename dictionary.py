@@ -72,8 +72,13 @@ class Dictionary:
         return self.trie.getAutoSuggestion(query)
 
 if __name__ == "__main__":
+    print('Adding...')
     path_file_dataset = os.path.join('res', 'common-english-viet-words.txt')
     my_dict = Dictionary()
     my_dict.addWordInFile(path_file_dataset)
     my_dict.saveStructure()
+<<<<<<< HEAD
+    print('Add successfully.')
+=======
     print("Add successfully.")
+>>>>>>> a31977223769c6ea57dff693dac2218e1b84a5b4

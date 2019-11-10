@@ -97,7 +97,7 @@ class App(QMainWindow):
         self.hide()
 
     def closeEvent(self, event):
-        self.my_dict.saveStructure()
+        #self.my_dict.saveStructure()
         event.accept()
 
 class AddForm(QWidget):
@@ -152,11 +152,13 @@ class AddForm(QWidget):
         mean_in_dict = self.parent().my_dict.searchWord(word)
         if mean_in_dict == '': 
             self.parent().my_dict.addOneWord(word, mean)
+            self.parent().my_dict.saveStructure()
             QMessageBox.information(self,'Dictionary message', 'Add successfully.', QMessageBox.Ok)
         else:
             button_reply = QMessageBox.warning(self, 'Dictionary message', 'Your word already exists. Do you want to replace it?', QMessageBox.Yes, QMessageBox.No)
             if button_reply == QMessageBox.Yes:
                 self.parent().my_dict.addOneWord(word, mean)
+                self.parent().my_dict.saveStructure()
                 QMessageBox.information(self,'Dictionary message', 'Add successfully.', QMessageBox.Ok)
         self.textbox_word.setText('')
         self.textbox_mean.setText('')
@@ -202,6 +204,7 @@ class DeleteForm(QWidget):
             button_reply = QMessageBox.warning(self, 'Dictionary message', 'Are you sure you want to delete this word?', QMessageBox.No, QMessageBox.Yes)
             if button_reply == QMessageBox.Yes:
                 self.parent().my_dict.deleteOneWord(word)
+                self.parent().my_dict.saveStructure()
                 QMessageBox.information(self, 'Dictionary message', 'Delete successfully.', QMessageBox.Ok)
         self.textbox_word.setText('')
 

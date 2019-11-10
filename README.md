@@ -15,3 +15,5 @@
 ## 4. Chạy chương trình
 - Lưu dataset (tạo các tập tin data): `python dictionary.py`
 - Chạy chương trình bằng lệnh: `python main.py`
+## 5. Demo
+![Demo](demo/demo1.png)
