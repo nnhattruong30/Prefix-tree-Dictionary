@@ -9,7 +9,7 @@
 - prefix_tree.py: cấu trúc cây tiền tố
 - ui.py: giao diện
 ## 3. Cài đặt môi trường
-- Hệ điều hành Ubuntu
+- Hệ điều hành Ubuntu, Windows
 - Python 3
 - PyQt5: `pip install PyQt5`
 ## 4. Chạy chương trình

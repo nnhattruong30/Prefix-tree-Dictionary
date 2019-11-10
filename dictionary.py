@@ -59,6 +59,8 @@ class Dictionary:
             mean_file = open(self.path_file_mean, "wb")
             with open(path_file, "r", encoding='utf-8') as f:
                 for line in f:
+                    line = line.replace('\r\n', '')
+                    line = line.replace('\n', '')
                     word_mean = line.split(maxsplit=1)
                     self.trie.insertNode(word_mean[0])
                     offset_start = mean_file.tell()
